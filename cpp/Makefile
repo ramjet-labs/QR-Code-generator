@@ -54,13 +54,28 @@ CXXFLAGS += -O1
 LIBSRC = BitBuffer QrCode QrSegment
 MAINS = QrCodeGeneratorDemo QrCodeGeneratorWorker
 
+LIB_NAME = qrcodegen.a
+
 # Build all binaries
-all: $(MAINS)
+all: $(LIB_NAME) $(MAINS)
+
+# Build the static library
+.PHONY: lib
+lib: $(LIB_NAME)
+
+$(LIB_NAME): $(LIBSRC:=.o)
+	ar ru $@ $^
 
 # Delete build output
 clean:
 	rm -f -- $(MAINS)
+	rm -f -- $(LIB_NAME)
+	rm -f -- $(LIBSRC:=.o)
 
 # Executable files
 %: %.cpp $(LIBSRC:=.cpp) $(LIBSRC:=.hpp)
 	$(CXX) $(CXXFLAGS) -o $@ $< $(LIBSRC:=.cpp)
+
+# Object files
+%.o: %.cpp $(LIBSRC:=.hpp)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
