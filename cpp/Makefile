@@ -30,8 +30,8 @@
 
 # Mandatory compiler flags
 CXXFLAGS += -std=c++11
-# Diagnostics. Adding '-fsanitize=address' is helpful for most versions of Clang and newer versions of GCC.
-CXXFLAGS += -Wall -fsanitize=undefined
+# Diagnostics
+CXXFLAGS += -Wall
 # Optimization level
 CXXFLAGS += -O1
 
