@@ -64,7 +64,13 @@ all: $(LIB_NAME) $(MAINS)
 lib: $(LIB_NAME)
 
 $(LIB_NAME): $(LIBSRC:=.o)
+ifdef AR
+	$(AR) ru $@ $^
+else
+# If the development environment doesn't have the AR variable set, default to the
+# native ar.
 	ar ru $@ $^
+endif
 
 # Delete build output
 clean:
